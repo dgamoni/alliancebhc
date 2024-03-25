@@ -363,6 +363,8 @@ if(!function_exists('avia_title'))
 		if($header_settings['header_title_bar'] == 'breadcrumbs_only') $args['title'] = '';
 
 
+
+
 		// OPTIONAL: Declare each item in $args as its own variable i.e. $type, $before.
 		extract( $args, EXTR_SKIP );
 
@@ -390,7 +392,6 @@ if(!function_exists('avia_title'))
 		}
 	}
 }
-
 
 
 

@@ -79,3 +79,10 @@ wp_head();
 	<div id='main' data-scroll-offset='<?php echo avia_header_setting('header_scroll_offset'); ?>'>
 
 	<?php do_action('ava_after_main_container'); ?>
+
+	
+	 <?php 
+		// global $current_user;
+		// $set_home = get_user_meta( $current_user->ID, 'set_home');
+		// var_dump($set_home);
+	?>

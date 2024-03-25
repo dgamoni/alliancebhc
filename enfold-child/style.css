@@ -9,6 +9,26 @@
  Text Domain:  enfold
 */
 
+@import url("../enfold/style.css");
+
+/* dc */
+.footer-title {
+	font-size: 16px;
+	font-weight: 700;
+}
+.footer-number {
+	font-size: 20px;
+	font-weight: 700;
+}
+.footer-text {
+	font-size: 13px;
+}
+.footer-icon {
+    background-image: url(http://alliancebhc.staging.wpengine.com/wp-content/uploads/ah_phone_icon.png);
+    background-repeat: no-repeat;
+    padding-left: 55px;
+}
+
 .av_main_nav_header.av_menu_right #header_main .main_menu-uber{
   clear:none;
   z-index: 100;
@@ -99,8 +119,24 @@
     margin:0;
 }
 
-@import url("../enfold/style.css");
 
+.title_bar_breadcrumb .title_container {
+  display: none;
+}
+.title_bar_breadcrumb .container_wrap .title_container {
+  display: block;
+}
+.background-main-text span {
+  color: white !important;
+}
+#providers:hover {
+  cursor: pointer;
+}
+.error {
+  color:red;
+  text-align: center;
+  margin-left: 78px;
+}
 
 /* =Theme customization starts here
 -------------------------------------------------------------- */

@@ -241,7 +241,8 @@ return "$url' defer ";
 }
 add_filter( 'clean_url', 'defer_parsing_of_js', 11, 1 );
 }
-*/
+
+*/
 /*-----------------------------------------------------------------------------------*/
 /* Remove query strings to improve site speed */
 /*-----------------------------------------------------------------------------------*
@@ -252,7 +253,8 @@ function _remove_script_version( $src ){
 }
 add_filter( 'script_loader_src', '_remove_script_version', 15, 1 );
 add_filter( 'style_loader_src', '_remove_script_version', 15, 1 );
-*/
+
+*/
 /*-----------------------------------------------------------------------------------*/
 /* EWWW folder skipping script */
 /*-----------------------------------------------------------------------------------
@@ -266,7 +268,8 @@ function ewww_skip_theme ( $bypass, $filename ) {
     return false;
   }
 }
-*/
+
+*/
 /*-----------------------------------------------------------------------------------*/
 /* SearchWP Customizations */
 /*-----------------------------------------------------------------------------------*/
@@ -484,3 +487,140 @@ function avf_template_builder_content_title($content = "")
 	$title = avia_title();
 	return $title . $content;
 }
+
+// dg
+
+// add body class for options title_bar_breadcrumb
+add_filter('body_class','my_class_names');
+function my_class_names( $classes ) {
+	if( is_page() ) {
+		global $avia_config;
+		$header_settings = avia_header_setting();
+		if($header_settings['header_title_bar'] == 'title_bar_breadcrumb') {
+			$classes[] = 'title_bar_breadcrumb';
+		}
+	}
+	return $classes;
+}
+
+// set_home init
+//add_action( 'init', 'init_set_home_for_user' );
+// function init_set_home_for_user() {
+// 	global $current_user;
+
+// 	$set_home = get_user_meta( $current_user->ID, 'set_home');
+// 	if($set_home){
+// 		//add_user_meta($current_user->ID, 'set_home', false );
+// 	}
+
+// 	// if(is_user_logged_in()){
+// 	// 	add_user_meta($current_user->ID, 'set_home', true );
+// 	// }
+// }
+
+//init redirect
+add_action('template_redirect', 'redirect_to_home_');
+function redirect_to_home_() {
+	 if(is_user_logged_in() && !is_admin()) {
+	 	global $current_user;
+	 	//add_user_meta($current_user->ID, 'set_home', true );//test
+	 	//delete_user_meta($current_user->ID, 'set_home');//test
+		$set_home = get_user_meta( $current_user->ID, 'set_home');
+		if(($set_home[0]==1) && is_front_page()) {
+			$location = get_site_url() . "/providers";
+			wp_redirect( $location, 301 );
+			//wp_redirect(home_url());
+	    	exit();
+		 }
+	}
+}
+
+function check_set_home(){
+	if(is_user_logged_in() && !is_admin()) {
+		global $current_user;
+		$set_home = get_user_meta( $current_user->ID, 'set_home');
+		if($set_home[0]==1){
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
+
+// set home click js
+add_action('wp_footer', 'add_custom_css');
+function add_custom_css() {
+	global $current_user;
+	?>
+	<script>
+		jQuery(document).ready(function($) {
+			
+			<?php if(check_set_home()){	echo "$('#providers').val('I dont want this as my homepage')"; } ?>
+
+			$('#providers').on('click', function() {
+				var set_home = $(this).val();
+				console.log('click'+set_home);
+		        $.ajax({
+		            type    : "POST",
+		            url     : "<?php echo admin_url('admin-ajax.php'); ?>",
+		            dataType: "json",
+		            data    : "action=alliancebhc_sethomepage&set_home=" + set_home+"&user=<?php echo $current_user->ID; ?>",
+		            success : function (a) {
+		                console.log(a);
+		                if(!a.error) {
+		                	$('#providers').val(a.set_home);
+		                }else {
+		                	$('#providers').after('<p class="error">'+a.error+'</p>');
+		                }
+		                
+		            }
+		        });//end ajax
+			});
+		});
+	</script>
+	<?php
+}
+
+// set home click ajax
+add_action( 'wp_ajax_alliancebhc_sethomepage', 'alliancebhc_set_homepage' );
+add_action( 'wp_ajax_nopriv_alliancebhc_sethomepage', 'alliancebhc_set_homepage' );
+function alliancebhc_set_homepage() {
+	if ( count( $_POST ) > 0 && $_POST['user']) {
+		$sett = $_POST['set_home'];
+		$user = $_POST['user'];
+		
+		if($sett == 'Make this my default homepage') {
+			$set_res = 'I dont want this as my homepage';
+	 	    update_user_meta(intval($user), 'set_home', true );
+	 	    if ( get_user_meta(intval($user),  'set_home', true ) != true ){
+	 	    	$res['message'] = 'not set';
+	 	    }else {
+	 	    	$res['message'] = 'setok'.get_user_meta(intval($user),  'set_home', true );
+	 	    }
+	
+
+		} else if ($sett == 'I dont want this as my homepage'){
+			$set_res = 'Make this my default homepage';
+			update_user_meta(intval($user), 'set_home', false );
+			if ( get_user_meta(intval($user),  'set_home', true ) != false ){
+	 	    	$res['message'] = 'not set';
+	 	    }else {
+	 	    	$res['message'] = 'setok'.get_user_meta(intval($user),  'set_home', true );
+	 	    }
+		} else {
+
+		}
+
+		$res['set_home'] = $set_res;
+		$res['user'] = $user;
+		echo json_encode( $res );
+		exit;
+	} else {
+		$res['error'] = 'You must login';
+		echo json_encode( $res );
+		exit;
+	}
+}
+
