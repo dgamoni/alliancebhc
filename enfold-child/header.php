@@ -75,7 +75,17 @@ wp_head();
          get_template_part( 'includes/helper', 'main-menu' );
 
 	} ?>
-		
+	
+	<?php 
+	global $post;
+	$alliancebhc_slider_in_header = get_field('alliancebhc_slider_in_header', $post->ID );
+	if($alliancebhc_slider_in_header):
+		get_template_part( 'includes/header', 'slider' ); 
+	elseif( is_page()):
+		//get_template_part( 'includes/breadforpage'); 
+	endif;
+	?>
+
 	<div id='main' data-scroll-offset='<?php echo avia_header_setting('header_scroll_offset'); ?>'>
 
 	<?php do_action('ava_after_main_container'); ?>

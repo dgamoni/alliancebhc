@@ -31,11 +31,11 @@ if(!class_exists('avia_breadcrumb'))
 			$output = $this->simple_breadcrumb_case($post);
 
 			echo "<span class='current_crumb'>";
-			if ( is_page() || is_single()) {
-			the_title();
-			}else{
-			echo $output;
-			}
+				if ( is_single()) {
+					the_title();
+				} else {
+					echo $output;
+				}
 			echo " </span></p>";
 		}
 

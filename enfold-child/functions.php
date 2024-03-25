@@ -498,6 +498,10 @@ function my_class_names( $classes ) {
 		$header_settings = avia_header_setting();
 		if($header_settings['header_title_bar'] == 'title_bar_breadcrumb') {
 			$classes[] = 'title_bar_breadcrumb';
+		} else if ($header_settings['header_title_bar']=='breadcrumbs_only'){
+			$classes[] = 'breadcrumbs_only';
+		} else if ($header_settings['header_title_bar']=='title_bar'){
+			$classes[] = 'title_bar';
 		}
 	}
 	return $classes;
@@ -532,6 +536,14 @@ function redirect_to_home_() {
 			//wp_redirect(home_url());
 	    	exit();
 		 }
+	} else if( isset($_COOKIE['set_home']) && !is_admin()) {
+		$set_home = $_COOKIE['set_home'];
+		if(($set_home == 'I dont want this as my homepage') && is_front_page()) {
+			$location = get_site_url() . "/providers";
+			wp_redirect( $location, 301 );
+			//wp_redirect(home_url());
+	    	exit();
+		}
 	}
 }
 
@@ -549,6 +561,21 @@ function check_set_home(){
 	}
 }
 
+function check_set_home_cook(){
+	if( !is_user_logged_in() && !is_admin() && isset($_COOKIE['set_home']) ) {
+
+		$set_home = $_COOKIE['set_home'];
+		
+		if($set_home == 'I dont want this as my homepage'){
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
+
 // set home click js
 add_action('wp_footer', 'add_custom_css');
 function add_custom_css() {
@@ -557,16 +584,17 @@ function add_custom_css() {
 	<script>
 		jQuery(document).ready(function($) {
 			
-			<?php if(check_set_home()){	echo "$('#providers').val('I dont want this as my homepage')"; } ?>
+			<?php if(check_set_home()){	echo "$('#providers').val('I dont want this as my homepage')";} else if(check_set_home_cook()){	echo "$('#providers').val('I dont want this as my homepage')";} ?>
 
 			$('#providers').on('click', function() {
 				var set_home = $(this).val();
 				console.log('click'+set_home);
+				console.log('user: '+<?php echo $current_user->ID;?>);
 		        $.ajax({
 		            type    : "POST",
 		            url     : "<?php echo admin_url('admin-ajax.php'); ?>",
 		            dataType: "json",
-		            data    : "action=alliancebhc_sethomepage&set_home=" + set_home+"&user=<?php echo $current_user->ID; ?>",
+		            data    : "action=alliancebhc_sethomepage_cook&set_home=" + set_home+"&user=<?php echo $current_user->ID; ?>",
 		            success : function (a) {
 		                console.log(a);
 		                if(!a.error) {
@@ -578,8 +606,73 @@ function add_custom_css() {
 		            }
 		        });//end ajax
 			});
+
+			// if ($('.on_image').length > 0) {
+			// 	var on_image_text = $('.on_image .avia_textblock').html(); 
+			// 	console.log(on_image_text);
+			// 	$('.on_image').hide();
+			// 	$('#background-main .container').addClass('background_on_image').html(on_image_text);
+			// }
+			// if( $('#background-main'.length > 0) ) {
+			// 	$('body').addClass('slider_background_enable');
+			// }
 		});
 	</script>
+	<style>
+
+		div .padding_main_content .av_three_fifth {
+			width: 63%;
+		}
+		.slider_background_enable div .padding_main_content .av_three_fifth {
+			padding-top: 0 !important;
+		}
+		div .padding_main_content .av_two_fifth {
+			margin-left: 0;
+		}
+
+		.title_wrap {
+			position: absolute;
+		    bottom: 0px;
+		    padding: 25px 25px 0px 25px;
+		    width: 63%;
+		    background-color: white;
+		}
+		.title_wrap h1 {
+			padding-bottom: 0;
+		    margin-bottom: 0;
+		}
+		.customtitle_container.title_container {
+			height: 26px !important;
+		}
+		#top .title_container .container {
+		    padding-top: 0px;
+		    padding-bottom: 0px;
+		    min-height: 15px;
+		}
+		.slider_background_enable {
+
+		}
+		#top.slider_background_enable #main .avia-section .template-page {
+		    padding-top: 0;
+		}
+		.slider_background_enable div .padding_main_content .av_two_fifth {
+		    margin-top: 50px;
+		}
+
+.breadcrumbs_only .title_container {
+  display: none;
+}
+.breadcrumbs_only .container_wrap .title_container {
+  display: block;
+}
+
+.title_bar .title_container {
+  display: none;
+}
+.title_bar .container_wrap .title_container {
+  display: block;
+}
+	</style>
 	<?php
 }
 
@@ -624,3 +717,97 @@ function alliancebhc_set_homepage() {
 	}
 }
 
+// set home click ajax+ cookies
+add_action( 'wp_ajax_alliancebhc_sethomepage_cook', 'alliancebhc_set_homepage_cook' );
+add_action( 'wp_ajax_nopriv_alliancebhc_sethomepage_cook', 'alliancebhc_set_homepage_cook' );
+function alliancebhc_set_homepage_cook() {
+	if ( count( $_POST ) > 0 && $_POST['user']) {
+		$sett = $_POST['set_home'];
+		$user = $_POST['user'];
+		
+		if($sett == 'Make this my default homepage') {
+			$set_res = 'I dont want this as my homepage';
+	 	    update_user_meta(intval($user), 'set_home', true );
+	 	    if ( get_user_meta(intval($user),  'set_home', true ) != true ){
+	 	    	$res['message'] = 'not set';
+	 	    }else {
+	 	    	$res['message'] = 'setok'.get_user_meta(intval($user),  'set_home', true );
+	 	    }
+	
+
+		} else if ($sett == 'I dont want this as my homepage'){
+			$set_res = 'Make this my default homepage';
+			update_user_meta(intval($user), 'set_home', false );
+			if ( get_user_meta(intval($user),  'set_home', true ) != false ){
+	 	    	$res['message'] = 'not set';
+	 	    }else {
+	 	    	$res['message'] = 'setok'.get_user_meta(intval($user),  'set_home', true );
+	 	    }
+		} else {
+
+		}
+
+		$res['set_home'] = $set_res;
+		$res['user'] = $user;
+		echo json_encode( $res );
+		exit;
+	} else if ( count( $_POST ) > 0 && $_POST['user'] == 0) { 
+		$sett = $_POST['set_home'];
+
+		
+		if($sett == 'Make this my default homepage') {
+			$set_res = 'I dont want this as my homepage';
+			setcookie( 'set_home', $set_res, strtotime('+3 day'), '/' );
+			if(isset($_COOKIE['set_home'])){
+				$res['message'] = 'setok'.$_COOKIE['set_home'];
+			}else{
+				$res['message'] = 'not set';
+			}
+		} else if ($sett == 'I dont want this as my homepage'){
+			$set_res = 'Make this my default homepage';
+			setcookie( 'set_home', $set_res, strtotime('+3 day'), '/' );
+			if(isset($_COOKIE['set_home'])){
+				$res['message'] = 'setok'.$_COOKIE['set_home'];
+			}else{
+				$res['message'] = 'not set';
+			}
+		} else {
+
+		}
+
+		$res['set_home'] = $set_res;
+		$res['user'] = $user;
+		echo json_encode( $res );
+		exit;
+	} else {
+		$res['error'] = 'Error!';
+		echo json_encode( $res );
+		exit;
+	}
+}
+
+// Replace avia.js
+function change_aviajs() {
+   wp_dequeue_script( 'avia-default' );
+   wp_enqueue_script( 'avia-default-child', get_stylesheet_directory_uri().'/js/avia.js', array('jquery'), 2, true );
+}
+//add_action( 'wp_enqueue_scripts', 'change_aviajs', 100 );
+
+function my_uber_add_subcontent( $content , $post , $item_id ){
+ 
+   $content.= '<span class="ubermenu-target-description ubermenu-target-text">';
+   $content.= mysql2date( get_option( 'date_format' ), $post->post_date );
+   $content.= '</span>';
+ 
+   return $content;
+}
+add_filter( 'ubermenu_dp_subcontent' , 'my_uber_add_subcontent' , 10 , 3 );
+
+add_filter('avia_load_shortcodes', 'avia_include_shortcode_template', 15, 1);
+function avia_include_shortcode_template($paths)
+{
+	$template_url = get_stylesheet_directory();
+    	array_unshift($paths, $template_url.'/shortcodes/');
+
+	return $paths;
+}

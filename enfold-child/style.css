@@ -17,7 +17,7 @@
 	font-weight: 700;
 }
 .footer-number {
-	font-size: 20px;
+	font-size: 24px;
 	font-weight: 700;
 }
 .footer-text {
@@ -27,6 +27,12 @@
     background-image: url(http://alliancebhc.staging.wpengine.com/wp-content/uploads/ah_phone_icon.png);
     background-repeat: no-repeat;
     padding-left: 55px;
+}
+.footer-accredited {
+	background-color: white;
+	border-radius: 15px;
+	padding: 20px;
+	display: inline-block;
 }
 
 .av_main_nav_header.av_menu_right #header_main .main_menu-uber{
@@ -47,6 +53,19 @@
   margin:0;
   left:0;
   right:auto;
+}
+
+.elsels1 {
+	left: 10px;
+}
+
+/* Ubermenu active and mouseover colors */
+.ubermenu-skin-vanilla .ubermenu-item-level-0.ubermenu-current-menu-item > .ubermenu-target, .ubermenu-skin-vanilla .ubermenu-item-level-0.ubermenu-current-menu-ancestor > .ubermenu-target {
+    color: white!important;
+    background: transparent;
+}
+.ubermenu-skin-vanilla .ubermenu-item-level-0:hover > .ubermenu-target, .ubermenu-skin-vanilla .ubermenu-item-level-0.ubermenu-active > .ubermenu-target {
+    color: white!important;
 }
 
 
@@ -138,6 +157,22 @@
   margin-left: 78px;
 }
 
+#ubermenu-main-3-avia #ubermenu-nav-main-3-avia {
+    left: 0;
+}
+#ubermenu-main-3-avia #menu-item-28083 {
+    float: right;
+}
+.breadcrumb .trail-before {
+  display: none;
+}
+#text-17 .footer-accredited a {
+  float: left;
+}
+.elsels {
+    right: 0 !important;
+    top: -70px !important;
+}
 /* =Theme customization starts here
 -------------------------------------------------------------- */
 
@@ -220,6 +255,7 @@ margin-bottom: 7px;
 
 
 }
+
 
 .logo, .logo a {
 height: 68px;
@@ -417,13 +453,14 @@ add icon for external links
 .content a[href*="//"]:not([href*="alliancebhc.staging.wpengine.com/"]) {
 	background-position: right 3px center;
 }
-*/
+
 .content a[href$=".pdf"],
 
 .content a[href*="//"]:not([href*="alliancebhc.staging.wpengine.com/"]) {
 	padding-right: 14px;
 	background-position: right center;
 }
+*/
 
 .alternate_color .breadcrumb a[title="Consumers & Families"] {
 	color: #39ad61;
@@ -466,14 +503,14 @@ padding-top:14px;
 #top .title_container a,
 #top .title_container span,
 .alternate_color div {
-	color: #fff;
+	color: #333333;
 }
 
 .title_container {
-	background-color: #1F3F5A;
+	background-color: transparent;
 }
 
-
+/*
 #top.consumers_families_descendant .title_container {
 	background-color: #39ad61;
 }
@@ -486,7 +523,7 @@ padding-top:14px;
 	background-color: #59B8EB;
 }
 
-
+*/
 .intense.btn {
 	color: #fff;
 	display: inline-block;
