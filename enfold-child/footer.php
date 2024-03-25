@@ -189,10 +189,11 @@
 <a href='#top' title='<?php _e('Scroll to top','avia_framework'); ?>' id='scroll-top-link' <?php echo av_icon_string( 'scrolltop' ); ?>><span class="avia_hidden_link_text"><?php _e('Scroll to top','avia_framework'); ?></span></a>
 
 <div id="fb-root"></div>
-<script>
-	document.querySelector(".consumer_home_title a").removeAttribute("title");
-        document.querySelector(".provider_home_title a").removeAttribute("title");
-        document.querySelector(".alliance_home_title a").removeAttribute("title");
+
+<script type="text/javascript">
+	jQuery( document ).ready( function () {
+		jQuery( ".consumer_home_title a, .provider_home_title a, .alliance_home_title a" ).removeAttr( "title" );
+	} );
 </script>
 <script type="text/javascript">
 	  jQuery(document).ready(function() {

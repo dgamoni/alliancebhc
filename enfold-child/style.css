@@ -12,10 +12,12 @@
 @import url("../enfold/style.css");
 
  /* TEMPORARY FIX*/
-#advanced_menu_toggle, #advanced_menu_hide  {display: none!important;}
+/*#advanced_menu_toggle, #advanced_menu_hide  {display: none!important;}*/
 
 
-
+.page-template-template-thought-leadership-php .hr.hr-invisible {
+    height: 0px!important;
+}
 /* dc */
 .footer-title {
 	font-size: 16px;
@@ -39,6 +41,10 @@
 	padding: 5px;
 	display: inline-block;
 }
+.footer-relay {
+	font-size: 20px;
+	font-weight: 500;
+}
 
 .av_main_nav_header.av_menu_right #header_main .main_menu-uber{
   clear:none;
@@ -60,9 +66,7 @@
   right:auto;
 }
 
-.page-id-149 .bellows {
-    margin: 0px 0;
-}
+
 
 
 /* Ubermenu active and mouseover colors */
@@ -1129,7 +1133,9 @@ font-size: 1.5em !important;
 
 }
 /****END Styling for Filebase file pages*****/
-
+.page-template-template-thought-leadership .post-title.entry-title > a {
+    font-weight: 600 !important;
+}
 .main_color .iconlist_content {
     color: black;
 }
@@ -1158,6 +1164,61 @@ display: none;
 }
 /* WP Curve #160886 - RS - End */
 
+.parent-pageid-34611 .topic_description
+{
+	/* font-size: 25px; */
+	font-size: 1.045em;
+	line-height: 1.15;
+}
+.page-template-template-thought-leadership .topic_description > .gravity-form
+{
+	display: none;
+}
+.page-template-template-thought-leadership .topic_description > p
+{
+	margin-top: 0px;
+	line-height: 26px;
+}
+.page-template-template-thought-leadership .flex_column.av_one_full.flex_column_div.av-zero-column-padding.first {
+    display: none;
+}
+/* .parent-pageid-34611 .post-entry-34703 .topic_description {
+  font-size: 25px !important;
+} */
+.additional_resources_wrap p {
+    margin-bottom: -25px;
+}
+.featured_video_url iframe{
+	width: 500px;
+height: 300px;
+}
+
+/*
+.post-entry-34693 .entry-content-header {
+  height: 50px;
+}
+*/
+
+.additional_resources_wrap .entry-content h2.post-title a {
+  font-size: 19px !important;
+}
+
+.additional_resources_wrap .entry-content h2.post-title a:hover {
+  text-decoration: underline !important;
+}
+
+.additional_resources_wrap .entry-content h2.post-title {
+  margin-bottom: -10px !important;
+}
+
+.additional_resources_wrap {
+  margin-top: 10px !important;
+}
+
+.additional_resources_wrap .av_textblock_section {
+  margin-top: 50px !important;
+}
+
 @media only screen and (max-width: 959px) {
   .av_main_nav_header.av_menu_right #header_main .main_menu-uber{
     position:relative;
@@ -1167,3 +1228,6 @@ display: none;
     padding-bottom:15px;
   }
 }
+
+
+section.404_recommendation {display:none !important;}

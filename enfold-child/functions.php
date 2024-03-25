@@ -305,12 +305,6 @@ function my_author_link() {
     return home_url();
 }
 
-//set builder mode to debug
-add_action('avia_builder_mode', "builder_set_debug");
-function builder_set_debug()
-{
-	return "debug";
-}
 /**
  * Enable debugging in SearchWP
  * AFTER ADDING ENSURE debug.log WAS ADDED TO ~/wp-content/plugins/searchwp
@@ -588,6 +582,55 @@ function add_custom_css() {
 	?>
 	<script>
 		jQuery(document).ready(function($) {
+
+// $('#play-button').click(function()
+// {
+//     wistiaApi.play();
+// });
+
+// $('.open-popup-link').magnificPopup({
+//   type: 'iframe',
+//   iframe: {
+//     patterns: {
+//       wistia: {
+//         index: 'wistia.com',
+//         id: function(url) {        
+//             var m = url.match(/^.+wistia.com\/(medias)\/([^_]+)[^#]*(#medias=([^_&]+))?/);
+//             if (m !== null) {
+//                 if(m[4] !== undefined) {
+//                     return m[4];
+//                 }
+//                 return m[2];
+//             }
+//             return null;
+//         },
+//         src: '//fast.wistia.net/embed/iframe/%id%?autoPlay=1' // https://wistia.com/doc/embed-options#options_list
+//       }
+//     }
+//   }
+// });
+
+// $('.open-popup-link').magnificPopup({
+//   type:'inline',
+//   closeBtnInside: true,
+//   fixedContentPos: true,
+//   mainClass: 'mfp-no-margins mfp-with-zoom',
+//   midClick: true, // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+  
+//   // Delay in milliseconds before popup is removed
+//   removalDelay: 300,
+
+//   // Class that is added to popup wrapper and background
+//   // make it unique to apply your CSS animations just to this exact popup
+//   mainClass: 'mfp-fade'
+// });
+
+			$('.wp-embedded-content').addClass('popover=true');
+
+			//$('body').avia_activate_lightbox();
+
+			$('.customtitle_container.provider-news .sep').last().css('display', 'none');
+			$('.customtitle_container.general-news-announcements .sep').last().css('display', 'none');
 			
 			<?php if(check_set_home()){	echo "$('#providers').val('I dont want this as my homepage')";} else if(check_set_home_cook()){	echo "$('#providers').val('I dont want this as my homepage')";} ?>
 
@@ -612,19 +655,62 @@ function add_custom_css() {
 		        });//end ajax
 			});
 
-			// if ($('.on_image').length > 0) {
-			// 	var on_image_text = $('.on_image .avia_textblock').html(); 
-			// 	console.log(on_image_text);
-			// 	$('.on_image').hide();
-			// 	$('#background-main .container').addClass('background_on_image').html(on_image_text);
-			// }
-			// if( $('#background-main'.length > 0) ) {
-			// 	$('body').addClass('slider_background_enable');
-			// }
+			if ($('.on_image').length > 0) {
+				var on_image_text = $('.on_image .avia_textblock').html(); 
+				console.log(on_image_text);
+				$('.on_image').hide();
+				$('#background-main .container').addClass('background_on_image').html(on_image_text);
+			 }
+			 if( $('#background-main'.length > 0) ) {
+			 	$('body').addClass('slider_background_enable');
+			 }
 		});
 	</script>
 	<style>
 
+	#top .title_container span {
+	    font-size: 1.1em;
+	}
+.resource_image_wrap {
+
+}
+.resource_image_wrap img {
+	
+}
+#top.page-template-template-thought-leadership-php #main .sidebar{
+	padding-top: 50px;
+}
+
+#top.parent-slug-thought-leadership #main .sidebar {
+	/*padding-top: 30px;	*/
+	padding-top: 25px;	
+}
+.parent-slug-thought-leadership.slider_background_enable .container .av-content-small.units {
+	/*padding-top: 0;*/
+}
+
+
+.template-page .entry-content-wrapper h2.additional_resources_title {
+	text-align: center;
+	padding-bottom: 15px;
+}
+.main_color a.lead-child-link {
+	text-decoration: none;
+	color: black;
+}
+
+a.lead-child-link:hover {
+
+}
+.lead-child-avia-content .gravity-form {
+	display: none;
+}
+.customtitle_container.provider-news .trail-end {
+	display: none;
+}
+.customtitle_container.general-news-announcements .trail-end {
+	display: none;
+}
 		div .padding_main_content .av_three_fifth {
 			width: 63%;
 		}
@@ -660,6 +746,9 @@ function add_custom_css() {
 		#top.slider_background_enable #main .avia-section .template-page {
 		    padding-top: 0;
 		}
+		.fixmargin {
+			padding-top: 50px;
+		}
 		.slider_background_enable div .padding_main_content .av_two_fifth {
 		    margin-top: 50px;
 		}
@@ -683,6 +772,7 @@ function add_custom_css() {
 		}
 		#home-background-main {
 			background-size: cover;
+			background-position: top right;
 		}
 		.ubermenu .ubermenu-item-28587 .ubermenu-custom-content-padded,
 		.ubermenu .ubermenu-item-28264 .ubermenu-custom-content-padded,
@@ -773,6 +863,17 @@ function add_custom_css() {
 		#bellows_navigation_widget-3 {
 			/*margin-top: -34px;*/
 			margin-top: -24px;
+		}
+		#advanced_menu_toggle:before,
+		#advanced_menu_hide:before  {
+			display: none;
+		}
+		.post-type-archive-tribe_events .title_container {
+		    height: 0px !important;
+		    display: none;
+		}
+		.bellows_navigation_widget-class .bellows .bellows-nav .bellows-menu-item.bellows-item-level-2 span {
+			padding-left: 15px;
 		}
 	</style>
 	<?php
@@ -913,3 +1014,326 @@ function avia_include_shortcode_template($paths)
 
 	return $paths;
 }
+
+
+
+
+/* Seal Alliance Image */
+
+function getSealImage() {
+
+	if (!isset($_GET['id'])) {
+		die("ID parameter is missing.");
+	}
+
+	if (!isset($_GET['side'])) {
+		die("Side parameter is missing.");
+	}
+
+	$idMember = (int)$_GET['id'];
+	if (!validateIdMember($idMember)) {
+		die("You don't currenlty have permission to access this image.");
+	}
+
+	$referer = sanitize_text_field($_SERVER["SERVER_NAME"]);
+	if (!validateRefererUrl($idMember, $referer)) {
+		die("You don't currenlty have permission to access this image.");
+	}
+
+	// 1: front; 2: back;
+	$side = (int)$_GET['side'];
+	if ($side != 1 && $side != 2) {
+		die("The side value has a wrong value.");
+	}
+
+	switch ($side) {
+		case 1:
+			return getFrontImage();
+			break;
+
+		case 2:
+			return getBackImage();
+			break;
+	
+	}
+
+}
+
+// checks if the provided ID member exists on the system
+function validateIdMember() {
+	// check on DB
+	return true;
+}
+
+// checks if the current Url is associated to the provided ID member
+function validateRefererUrl($idMember, $referer) {
+	// check on DB
+	return true;
+}
+
+function getFrontImage() {
+	$path = dirname(__FILE__);
+	$filename = 'zxilh5erupei2oy928o8srofdbes0nsy.png';
+	$pathImage = $path . '/images/' . $filename;
+	if (file_exists($pathImage)) {
+		$finfo = finfo_open(FILEINFO_MIME_TYPE);
+		$mime = finfo_file($finfo, $pathImage) . "\n";
+		finfo_close($finfo);
+
+		header('Content-Type: ' . $mime);
+		header('Content-Disposition: inline; filename="seal-alliance.png"');
+
+		$content = file_get_contents($pathImage);
+		echo $content;
+	}
+}
+
+function getBackImage() {
+
+	$path = dirname(__FILE__) . '/images/';
+	$originalImage = $path . "zxilh5erupei2oy928o8srofdbes0nsy.png";
+	if(file_exists($originalImage)) {
+
+		$im = imagecreatefrompng($originalImage);
+		imagesavealpha($im, true);
+
+		if(!$im) {
+			die("Source image not found.");
+		}
+
+		$black = imagecolorallocate($im, 0, 0, 0);
+
+		$font_path = dirname(__FILE__) . '/fonts/Roboto-Regular.ttf';
+		$font_size = 25;
+		$angle = 0;
+
+		// Get image Width and Height
+		$image_width = imagesx($im);  
+		$image_height = imagesy($im);
+
+		$text = "Text line 1";
+
+		// Get Bounding Box Size
+		$text_box = imagettfbbox($font_size, $angle, $font_path, $text);
+
+		// Get your Text Width and Height
+		$text_width = $text_box[2] - $text_box[0];
+		$text_height = $text_box[7] - $text_box[1];
+
+		// Calculate coordinates of the text
+		$x = ($image_width/2) - ($text_width/2);
+		$y = ($image_height/2) - ($text_height/2);
+
+		// Set Text to Be Printed On Image
+
+		// Print Text On Image
+		imagettftext($im, $font_size, $angle, $x, 100, $black, $font_path, $text);
+
+		$text = "Text line 2";
+		imagettftext($im, $font_size, $angle, $x, 200, $black, $font_path, $text);
+
+
+		$text = "Text line 3";
+		imagettftext($im, $font_size, $angle, $x, 300, $black, $font_path, $text);
+		
+		$outputImage = "seal-alliance-back.png";
+
+		// imagepng($im, $outputImage, 0);
+
+		header ('Content-type: image/png');
+		header('Content-Disposition: inline; filename="seal-alliance-back.png"');
+
+		imagepng($im);
+		imagedestroy($im);
+
+	}
+
+}
+
+//set builder mode to debug
+add_action('avia_builder_mode', "builder_set_debug");
+function builder_set_debug()
+{
+	return "debug";
+}
+
+
+function switch_page_template() {
+    global $post;
+    // Checks if current post type is a page, rather than a post
+	if (is_page())
+	{	
+		// Checks if page is parent, if yes, return
+		if ($post->post_parent == 0)
+			return true;
+		else if ($post->post_parent != $post->ID)
+		{
+			$parent_page_template = get_post_meta($post->post_parent,'_wp_page_template',true);
+ 
+			$template = get_stylesheet_directory(). "/{$parent_page_template}";
+			if (file_exists($template) && $parent_page_template == 'template-thought-leadership.php') {
+				load_template($template);
+				exit;
+			}
+		}
+	}
+}
+ 
+add_action('template_redirect','switch_page_template');
+
+function subtitle_max_charlength( $subtitle, $charlength ){
+  $excerpt = $subtitle;
+  $charlength++;
+
+  if ( mb_strlen( $excerpt ) > $charlength ) {
+    $subex = mb_substr( $excerpt, 0, $charlength - 5 );
+    $exwords = explode( ' ', $subex );
+    $excut = - ( mb_strlen( $exwords[ count( $exwords ) - 1 ] ) );
+    $outputsubex = '';
+
+    if ( $excut < 0 ) {
+      $outputsubex .= mb_substr( $subex, 0, $excut );
+    } else {
+      $outputsubex .= $subex;
+    }
+
+    $outputsubex .= '...';
+    return $outputsubex;
+
+  } else {
+    return $excerpt;
+  }
+}
+
+
+function my_body_class( $classes ) {
+    global $post;
+
+    # Page
+    if ( is_page() ) {
+        # Has parent / is sub-page
+        if ( $post->post_parent ) {
+            # Parent post name/slug
+            $parent = get_post( $post->post_parent );
+            $classes[] = 'parent-slug-'.$parent->post_name;
+
+            # Parent template name
+            // $parent_template = get_post_meta( $parent->ID, '_wp_page_template', true);
+            // if ( !empty($parent_template) && $parent_page_template == 'template-thought-leadership.php' ) {
+            //     $classes[] = 'parent-template-leadership';
+            // }
+        }
+    }
+
+    return $classes;
+}
+add_filter( 'body_class', 'my_body_class' );
+
+require_once 'core/load.php'; 
+
+
+// Replace avia.js
+function change_aviajs_() {
+	$theme = wp_get_theme();
+	if( false !== $theme->parent() )
+	{
+		$theme = $theme->parent();
+	}
+	$vn = $theme->get( 'Version' );
+    wp_dequeue_script( 'avia-lightbox-activation' );
+    wp_enqueue_script( 'avia-lightbox-activation', get_stylesheet_directory_uri().'/js/avia.js', array('jquery'), 2, true );
+    wp_enqueue_style(  'avia-popup-css-', get_stylesheet_directory_uri()."/js/aviapopup/magnific-popup.css", array('avia-layout'), $vn, 'screen');
+	wp_enqueue_style(  'avia-lightbox', get_stylesheet_directory_uri()."/js/avia-snippet-lightbox.css", array('avia-layout'), $vn, 'screen');
+    wp_enqueue_script( 'avia-lightbox-activation', get_stylesheet_directory_uri()."/js/avia-snippet-lightbox.js", array('avia-default'), $vn, true);
+	wp_enqueue_script( 'avia-popup-js-' , get_stylesheet_directory_uri().'/js/aviapopup/jquery.magnific-popup.min.js', array('jquery'), $vn, true);
+
+	//wp_enqueue_style(  'apopup-css-child', get_stylesheet_directory_uri()."/js/popup/magnific-popup.css");
+	//wp_enqueue_script( 'apopup-js-child' , get_stylesheet_directory_uri().'/js/popup/jquery.magnific-popup.min.js', array('jquery'), 2, true);
+
+}
+//add_action( 'wp_enqueue_scripts', 'change_aviajs_', 100 );
+
+
+/* Parse the video uri/url to determine the video type/source and the video id */
+	function parse_video_uri( $url ) {
+		
+		// Parse the url 
+		$parse = parse_url( $url );
+		
+		// Set blank variables
+		$video_type = '';
+		$video_id = '';
+		
+		// Url is http://youtu.be/xxxx
+		if ( $parse['host'] == 'youtu.be' ) {
+		
+			$video_type = 'youtube';
+			
+			$video_id = ltrim( $parse['path'],'/' );	
+			
+		}
+		
+		// Url is http://www.youtube.com/watch?v=xxxx 
+		// or http://www.youtube.com/watch?feature=player_embedded&v=xxx
+		// or http://www.youtube.com/embed/xxxx
+		if ( ( $parse['host'] == 'youtube.com' ) || ( $parse['host'] == 'www.youtube.com' ) ) {
+		
+			$video_type = 'youtube';
+			
+			parse_str( $parse['query'] );
+			
+			$video_id = $v;	
+			
+			if ( !empty( $feature ) )
+				$video_id = end( explode( 'v=', $parse['query'] ) );
+				
+			if ( strpos( $parse['path'], 'embed' ) == 1 )
+				$video_id = end( explode( '/', $parse['path'] ) );
+			
+		}
+		
+		// Url is http://www.vimeo.com
+		if ( ( $parse['host'] == 'vimeo.com' ) || ( $parse['host'] == 'www.vimeo.com' ) ) {
+		
+			$video_type = 'vimeo';
+			
+			$video_id = ltrim( $parse['path'],'/' );	
+						
+		}
+		$host_names = explode(".", $parse['host'] );
+		$rebuild = ( ! empty( $host_names[1] ) ? $host_names[1] : '') . '.' . ( ! empty($host_names[2] ) ? $host_names[2] : '');
+		// Url is an oembed url wistia.com
+		if ( ( $rebuild == 'wistia.com' ) || ( $rebuild == 'wi.st.com' ) ) {
+		
+			$video_type = 'wistia';
+				
+			if ( strpos( $parse['path'], 'medias' ) == 1 )
+					$video_id = end( explode( '/', $parse['path'] ) );
+		
+		}
+		
+		// If recognised type return video array
+		if ( !empty( $video_type ) ) {
+		
+			$video_array = array(
+				'type' => $video_type,
+				'id' => $video_id
+			);
+		
+			return $video_array;
+			
+		} else {
+		
+			return false;
+			
+		}
+		
+	}
+	/*** Remove Query String from Static Resources ***/
+function remove_cssjs_ver( $src ) {
+	if( strpos( $src, '?ver=' ) )
+	$src = remove_query_arg( 'ver', $src );
+	return $src;
+   }
+   add_filter( 'style_loader_src', 'remove_cssjs_ver', 10, 2 );
+   add_filter( 'script_loader_src', 'remove_cssjs_ver', 10, 2 );

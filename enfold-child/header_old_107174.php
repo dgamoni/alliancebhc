@@ -88,17 +88,9 @@ wp_head();
 		$alliancebhc_slider_in_header = get_field('alliancebhc_slider_in_header', $post->ID );
 	}
 
-	/* Support - #107174 
-	** Added new if condition to detect if current page is a child of Thought Leadership Page
-	** Created and Included new template part called includes/header-title.php
-	*/
-
-	$thought_leadership_id = wp_get_post_parent_id( get_the_ID() );
-
+	
 	if($alliancebhc_slider_in_header):
 		get_template_part( 'includes/header', 'slider' );
-	elseif( is_page() && ( 34611 === $thought_leadership_id ) ): // 34611 is the ID of Thought Leadership Parent Page
-		get_template_part( 'includes/header', 'title' );
 	elseif( is_page()):
 		//get_template_part( 'includes/header', 'title' );
 	elseif( is_singular('post') && is_single() ):
