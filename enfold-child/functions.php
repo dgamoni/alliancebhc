@@ -484,7 +484,12 @@ add_filter( 'the_permalink', 'my_search_media_direct_link', 10, 2 );
 add_filter('avf_template_builder_content', 'avf_template_builder_content_title', 10, 1);
 function avf_template_builder_content_title($content = "")
 {
-	$title = avia_title();
+	global $post;
+	$title = '';
+	$alliancebhc_slider_in_header = get_field('alliancebhc_slider_in_header', $post->ID );
+	if(!$alliancebhc_slider_in_header):
+		$title = avia_title();
+	endif;
 	return $title . $content;
 }
 
@@ -659,19 +664,116 @@ function add_custom_css() {
 		    margin-top: 50px;
 		}
 
-.breadcrumbs_only .title_container {
-  display: none;
-}
-.breadcrumbs_only .container_wrap .title_container {
-  display: block;
-}
+		.breadcrumbs_only .title_container {
+		  display: none;
+		}
+		.breadcrumbs_only .container_wrap .title_container {
+		  display: block;
+		}
 
-.title_bar .title_container {
-  display: none;
-}
-.title_bar .container_wrap .title_container {
-  display: block;
-}
+		.title_bar .title_container {
+		  display: none;
+		}
+		.title_bar .container_wrap .title_container {
+		  display: block;
+		}
+		.slider_background_enable .container .av-content-small.units {
+		    width: 63%;
+		    padding: 25px;
+		}
+		#home-background-main {
+			background-size: cover;
+		}
+		.ubermenu .ubermenu-item-28587 .ubermenu-custom-content-padded,
+		.ubermenu .ubermenu-item-28264 .ubermenu-custom-content-padded,
+		.ubermenu .ubermenu-item-28305 .ubermenu-custom-content-padded,
+		.ubermenu .ubermenu-item-28588 .ubermenu-custom-content-padded,
+		.ubermenu .ubermenu-item-28520 .ubermenu-custom-content-padded {
+			padding-top: 5px;
+		}
+		.ubermenu .ubermenu-item-28587 .ubermenu-custom-content-padded p,
+		.ubermenu .ubermenu-item-28264 .ubermenu-custom-content-padded p,
+		.ubermenu .ubermenu-item-28305 .ubermenu-custom-content-padded p,
+		.ubermenu .ubermenu-item-28588 .ubermenu-custom-content-padded p,
+		.ubermenu .ubermenu-item-28520 .ubermenu-custom-content-padded p {
+			margin-top: 0px;
+		}
+		.bellows .bellows-nav .bellows-menu-item-28059 p {
+			padding-bottom: 15px;
+		}
+		#top.post-type-archive-tribe_events .alternate_color.title_container .main-title,
+		#top.single-tribe_events .alternate_color.title_container .main-title,
+		.single-tribe_events .alternate_color .breadcrumb,
+		.single-tribe_events .title_container  {
+			display:none !important;
+		}
+		.single-post .title_container {
+		    display: none;
+		}
+		.single-post .customtitle_container.title_container	{
+			display: block;
+		}
+		.sidebar {
+    		 padding-top: 0px;
+    	} 
+    	.bellows {
+    		margin: 25px 0;
+    	}
+    	@media only screen and (max-width: 767px) {
+    		.title_wrap {
+    			width: 100%;
+    		}
+    		.responsive #top .container .av-content-small {
+			    width: 92%;
+			}
+    	}
+    	.elsels1 {
+    		/*padding: 0 9px;*/
+    		display: inline-block;
+		    text-align: center;
+		    width: 282px;
+    	}
+    	.sidebar_right {
+		    padding-top: 0.85em;
+    	}
+    	#background-main {
+    		background-repeat: no-repeat;
+    		background-attachment: scroll !important;
+    		background-position: center bottom !important; 
+    	}
+    	.post-type-archive-tribe_events .alternate_color .breadcrumb{
+    		display: none !important;
+    	}
+    	#main > div.container_wrap.container_wrap_first.main_color.fullsize > div > main {
+		    margin-left: 25px;
+		    margin-top: inherit;
+		}
+		.consumers_families_descendant #av_section_3 {
+			margin-left:25px;
+		}
+		#top.providers_descendant #main .avia-section .template-page.av-content-full,
+		body.providers_descendant .av-content-full.units.alpha {
+			margin-left:25px;
+		}
+		#menu-item-28087 h3 {
+			text-align: left !important;
+		    font-size: 22px;
+		    color: #333;
+		    font-weight: 400;
+		}
+		#menu-item-30543 span {
+			text-align: left !important;
+		    font-size: 22px;
+		    color: #333;
+		    font-weight: 400;
+		}
+		#bellows_navigation_widget-4 {
+			margin-top: -24px;
+		}
+		#bellows_navigation_widget-3 {
+			/*margin-top: -34px;*/
+			margin-top: -24px;
+		}
 	</style>
 	<?php
 }

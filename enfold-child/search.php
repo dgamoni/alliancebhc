@@ -12,7 +12,7 @@ global $avia_config;
 
 
 	 $results = avia_which_archive();
-	 echo avia_title(array('title' => 'Search AllianceBHC.org' ));
+	 //echo avia_title(array('title' => 'Search AllianceBHC.org' ));
 	 
 	 do_action( 'ava_after_main_title' );
 	 ?>

@@ -20,23 +20,32 @@ if($header_settings['header_title_bar'] == 'header_title_bar') {
 }
 
 $slider = array(
-	"http://alliancebhc.staging.wpengine.com/wp-content/uploads/Headers-consumers-mountain.jpg",
-	"http://alliancebhc.staging.wpengine.com/wp-content/uploads/raleigh-capital.jpg",
-	"http://alliancebhc.staging.wpengine.com/wp-content/uploads/abh-backgrounds1.jpg",
-	"http://alliancebhc.staging.wpengine.com/wp-content/uploads/abh-backgrounds3.jpg",
-	"http://alliancebhc.staging.wpengine.com/wp-content/uploads/abh-backgrounds2.jpg",
-	"http://alliancebhc.staging.wpengine.com/wp-content/uploads/abh-backgrounds4.jpg",
-	"http://alliancebhc.staging.wpengine.com/wp-content/uploads/park.jpg)",
-	"http://alliancebhc.staging.wpengine.com/wp-content/uploads/durham.jpg");
+	"http://alliancebhc.staging.wpengine.com/wp-content/headers/1.jpg",
+	"http://alliancebhc.staging.wpengine.com/wp-content/headers/2.jpg",
+	"http://alliancebhc.staging.wpengine.com/wp-content/headers/3.jpg",
+	"http://alliancebhc.staging.wpengine.com/wp-content/headers/4.jpg",
+	"http://alliancebhc.staging.wpengine.com/wp-content/headers/5.jpg",
+	"http://alliancebhc.staging.wpengine.com/wp-content/headers/6.jpg",
+	"http://alliancebhc.staging.wpengine.com/wp-content/headers/7.jpg",
+	"http://alliancebhc.staging.wpengine.com/wp-content/headers/8.jpg",
+	"http://alliancebhc.staging.wpengine.com/wp-content/headers/9.jpg");
 
 $rand_slide = array_rand($slider, 1);
+
+if( is_category()){
+	$title = get_queried_object()->name;
+} elseif(is_search()){
+	$title = 'Search AllianceBHC.org';
+}else {
+	$title = get_the_title( $post->ID );
+}
 ?>
 
-<div id="background-main" class="avia-section main_color avia-section-default avia-no-shadow avia-full-stretch avia-bg-style-fixed  avia-builder-el-0  el_before_av_section  avia-builder-el-first   av-minimum-height av-minimum-height-custom container_wrap fullsize" style="background-repeat: no-repeat; background-image: url(<?php echo $slider[$rand_slide];?>); background-attachment: fixed; background-position: center center;" data-section-bg-repeat="stretch">
-	<div class="container background_on_image" style="height:250px">
+<div id="background-main" class="avia-section main_color avia-section-default avia-no-shadow avia-full-stretch avia-bg-style-fixed  avia-builder-el-0  el_before_av_section  avia-builder-el-first   av-minimum-height av-minimum-height-custom container_wrap fullsize" style="background-image: url(<?php echo $slider[$rand_slide];?>);" data-section-bg-repeat="stretch">
+	<div class="container background_on_image" style="height:280px">
 		<div class="title_wrap">
 			<?php if($titlr_true): ?>
-				<h1><?php echo get_the_title( $post->ID ); ?></h1>
+				<h1><?php echo $title; ?></h1>
 			<?php endif;?>
 
 			<?php if($bread_true): ?>
@@ -50,10 +59,11 @@ $rand_slide = array_rand($slider, 1);
 	</div>
 </div>
 
-	<script>
-		jQuery(document).ready(function($) {
-			if( $('#background-main'.length > 0) ) {
-				$('body').addClass('slider_background_enable');
-			}
-		});
-	</script>
+<script>
+	jQuery(document).ready(function($) {
+		if( $('#background-main'.length > 0) ) {
+			$('body').addClass('slider_background_enable');
+		}
+	});
+</script>
+

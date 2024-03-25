@@ -11,6 +11,11 @@
 
 @import url("../enfold/style.css");
 
+ /* TEMPORARY FIX*/
+#advanced_menu_toggle, #advanced_menu_hide  {display: none!important;}
+
+
+
 /* dc */
 .footer-title {
 	font-size: 16px;
@@ -24,14 +29,14 @@
 	font-size: 13px;
 }
 .footer-icon {
-    background-image: url(http://alliancebhc.staging.wpengine.com/wp-content/uploads/ah_phone_icon.png);
+    background-image: url(https://www.alliancebhc.org/wp-content/uploads/ah_phone_icon.png);
     background-repeat: no-repeat;
     padding-left: 55px;
 }
 .footer-accredited {
 	background-color: white;
-	border-radius: 15px;
-	padding: 20px;
+	border-radius: 12px;
+	padding: 5px;
 	display: inline-block;
 }
 
@@ -55,9 +60,10 @@
   right:auto;
 }
 
-.elsels1 {
-	left: 10px;
+.page-id-149 .bellows {
+    margin: 0px 0;
 }
+
 
 /* Ubermenu active and mouseover colors */
 .ubermenu-skin-vanilla .ubermenu-item-level-0.ubermenu-current-menu-item > .ubermenu-target, .ubermenu-skin-vanilla .ubermenu-item-level-0.ubermenu-current-menu-ancestor > .ubermenu-target {
@@ -707,6 +713,7 @@ background-color: rgb(48, 155, 207);
 /*
 *END Single events
 */
+
 
 
 

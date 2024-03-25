@@ -78,11 +78,22 @@ wp_head();
 	
 	<?php 
 	global $post;
-	$alliancebhc_slider_in_header = get_field('alliancebhc_slider_in_header', $post->ID );
+	// vars
+	$queried_object = get_queried_object(); 
+	$taxonomy = $queried_object->taxonomy;
+	$term_id = $queried_object->term_id; 
+	if( is_category()){
+		$alliancebhc_slider_in_header = get_field('alliancebhc_slider_in_header',  $taxonomy . '_' . $term_id );
+	} else {
+		$alliancebhc_slider_in_header = get_field('alliancebhc_slider_in_header', $post->ID );
+	}
+	
 	if($alliancebhc_slider_in_header):
 		get_template_part( 'includes/header', 'slider' ); 
 	elseif( is_page()):
 		//get_template_part( 'includes/breadforpage'); 
+	elseif( is_singular('post') && is_single() ):
+		get_template_part( 'includes/header', 'slider' ); 
 	endif;
 	?>
 
